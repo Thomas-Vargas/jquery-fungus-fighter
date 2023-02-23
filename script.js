@@ -26,11 +26,7 @@ function renderApText() {
         playerAP = 0;
     } 
 
-    $('.ap-text').html(`
-        <p>${playerAP} AP</p>
-    `);
-
-    //update progress bar
+    $('.ap-text').html(`<p>${playerAP} AP</p>`);
     $('#ap-meter').val(`${playerAP}`);
 }
 
@@ -44,12 +40,8 @@ function renderFungusHP() {
         regenerateHealth();
     }
 
-
-    $('.hp-text').html(`
-        <p>${fungusHP} HP</p>
-    `);
-
-    $('#hp-meter').val(`${fungusHP}`)
+    $('.hp-text').html(`<p>${fungusHP} HP</p>`);
+    $('#hp-meter').val(`${fungusHP}`);
 }
 
 function attack() {

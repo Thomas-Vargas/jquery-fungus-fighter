@@ -39,7 +39,7 @@ function renderFungusHP() {
         fungusHP = 0;
     } 
 
-    if (fungusHP < 50 && regenHealth !== true) {
+    if (fungusHP < 50 && regenHealth !== true && playerAP > 12) {
         regenHealth = true;
         regenerateHealth();
     }
@@ -94,11 +94,11 @@ function attack() {
 }
 
 function isFungusDead() {
-    console.log(fungusHP)
+    console.log(fungusHP);
     if (fungusHP <= 0) {
         $('.freaky-fungus').removeClass('walk');
         $('.freaky-fungus').addClass('dead');
-        clearInterval(interval)
+        clearInterval(interval);
     }
 }
 
@@ -107,14 +107,14 @@ function doIHaveAP() {
         $('.freaky-fungus').removeClass('walk');
         $('.freaky-fungus').addClass('jump');
         $('.attack-btn').attr('disabled', true);
-        clearInterval(interval)
+        clearInterval(interval);
     }
 }
 
 function regenerateHealth() {
         let regenInterval = setInterval(function() {
-            fungusHP++
-            console.log(fungusHP)
+            fungusHP++;
+            console.log(fungusHP);
 
             $('.hp-text').html(`<p>${fungusHP} HP</p>`);
     

@@ -3,8 +3,10 @@ $(document).ready(onReady);
 // State Variables can be declared outside of the onReady
 // Feel free to make this to what you want!
 // Example:
- let fungusHP = 100;
- let playerAP = 100;
+let fungusHP = 100;
+let playerAP = 100;
+let regenHealth = false;
+let interval;
 
 function onReady() { 
     renderAll();  
@@ -29,13 +31,19 @@ function renderApText() {
     `);
 
     //update progress bar
-    $('#ap-meter').val(`${playerAP}`)
+    $('#ap-meter').val(`${playerAP}`);
 }
 
 function renderFungusHP() {
     if (fungusHP < 0) {
         fungusHP = 0;
     } 
+
+    if (fungusHP < 50 && regenHealth !== true) {
+        regenHealth = true;
+        regenerateHealth();
+    }
+
 
     $('.hp-text').html(`
         <p>${fungusHP} HP</p>
@@ -79,16 +87,18 @@ function attack() {
             alert('Not enough AP!');
         }
     }
-    
-    renderAll()
+
     isFungusDead();
     doIHaveAP();
+    renderAll();
 }
 
 function isFungusDead() {
-    if (fungusHP === 0) {
+    console.log(fungusHP)
+    if (fungusHP <= 0) {
         $('.freaky-fungus').removeClass('walk');
         $('.freaky-fungus').addClass('dead');
+        clearInterval(interval)
     }
 }
 
@@ -96,16 +106,22 @@ function doIHaveAP() {
     if (playerAP === 0 || playerAP < 12) {
         $('.freaky-fungus').removeClass('walk');
         $('.freaky-fungus').addClass('jump');
-        $('.attack-btn').attr('disabled', true)
+        $('.attack-btn').attr('disabled', true);
+        clearInterval(interval)
     }
 }
 
 function regenerateHealth() {
-    setInterval(function() {
-        fungusHP++;
-        console.log(fungusHP)
-        renderFungusHP()
-    }, 1000)
+        let regenInterval = setInterval(function() {
+            fungusHP++
+            console.log(fungusHP)
+
+            $('.hp-text').html(`<p>${fungusHP} HP</p>`);
+    
+            $('#hp-meter').val(`${fungusHP}`);
+        }, 1000)
+
+        interval = regenInterval;
 }
 
 function renderAll() {

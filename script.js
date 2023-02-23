@@ -27,6 +27,9 @@ function renderApText() {
     $('.ap-text').html(`
         <p>${playerAP} AP</p>
     `);
+
+    //update progress bar
+    $('#ap-meter').val(`${playerAP}`)
 }
 
 function renderFungusHP() {
@@ -37,6 +40,8 @@ function renderFungusHP() {
     $('.hp-text').html(`
         <p>${fungusHP} HP</p>
     `);
+
+    $('#hp-meter').val(`${fungusHP}`)
 }
 
 function attack() {
@@ -48,11 +53,7 @@ function attack() {
             fungusHP -= 14;
         } else {
             alert('Not enough AP!');
-        }
-
-        renderAll();
-        isFungusDead();
-        doIHaveAP();
+        } 
     }
     if ($(this).hasClass('entangle')) {
         if (playerAP >= 23) {
@@ -61,10 +62,6 @@ function attack() {
         } else {
             alert('Not enough AP!');
         }
-
-        renderAll();
-        isFungusDead()
-        doIHaveAP();
     }
     if ($(this).hasClass('dragon-blade')) {
         if (playerAP >= 38) {
@@ -73,10 +70,6 @@ function attack() {
         } else {
             alert('Not enough AP!');
         }
-        
-        renderAll();
-        isFungusDead();
-        doIHaveAP();
     }
     if ($(this).hasClass('star-fire')) {
         if (playerAP >= 33) {
@@ -85,17 +78,11 @@ function attack() {
         } else {
             alert('Not enough AP!');
         }
-
-        renderAll();
-        isFungusDead();
-        doIHaveAP();
     }
     
-}
-
-function renderAll() {
-    renderApText();
-    renderFungusHP();
+    renderAll()
+    isFungusDead();
+    doIHaveAP();
 }
 
 function isFungusDead() {
@@ -111,4 +98,17 @@ function doIHaveAP() {
         $('.freaky-fungus').addClass('jump');
         $('.attack-btn').attr('disabled', true)
     }
+}
+
+function regenerateHealth() {
+    setInterval(function() {
+        fungusHP++;
+        console.log(fungusHP)
+        renderFungusHP()
+    }, 1000)
+}
+
+function renderAll() {
+    renderApText();
+    renderFungusHP();
 }
